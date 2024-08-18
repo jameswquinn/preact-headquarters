@@ -290,3 +290,179 @@ HeadQuarters comes with a set of default styles and utility classes. You can cus
 - `.hq-animated`: Adds a transition effect to all properties.
 - `.hq-disable-large`: Disables the HeadQuarters effect on larger screens (use with a media query).
 - `.hq-sidebar`: Styles for using HeadQuarters with a sidebar instead of a top header.
+
+## Comparison with headroom.js
+
+preact-headquarters is inspired by the popular headroom.js library but tailored specifically for Preact applications. Here's a comparison between preact-headquarters and headroom.js:
+
+### Similarities
+
+1. **Core Functionality**: Both libraries provide a way to hide the header when scrolling down and show it when scrolling up.
+2. **Customizable Tolerances**: Both allow you to set tolerances for when the header should pin/unpin.
+3. **Classes for Styling**: Both add classes to the header element to indicate its current state (pinned, unpinned, top, not-top).
+4. **Callback Support**: Both provide callbacks for pin and unpin events.
+
+### Differences
+
+1. **Framework**: 
+   - preact-headquarters: Built specifically for Preact applications.
+   - headroom.js: Framework-agnostic, can be used with vanilla JavaScript or any framework.
+
+2. **Installation and Usage**:
+   - preact-headquarters: Installed via npm and used as a Preact component.
+   - headroom.js: Can be included via script tag or installed via npm, requires initialization.
+
+3. **Performance**:
+   - preact-headquarters: Uses Preact's efficient rendering and state management.
+   - headroom.js: Uses vanilla JavaScript, may require additional setup for optimal performance in React-like environments.
+
+4. **Bundle Size**:
+   - preact-headquarters: Smaller bundle size when used in Preact applications (as it leverages Preact's existing code).
+   - headroom.js: Slightly larger as it's a standalone library.
+
+5. **API and Configuration**:
+   - preact-headquarters: Configuration is done via props in a declarative manner.
+   - headroom.js: Configuration is done via a options object in an imperative manner.
+
+6. **TypeScript Support**:
+   - preact-headquarters: Built with Preact, easy to add TypeScript definitions.
+   - headroom.js: Requires separate TypeScript definitions.
+
+7. **Additional Features in preact-headquarters**:
+   - Dynamic styles based on scroll state
+   - Easy integration with Preact's state management
+   - Built-in support for calculating height on resize
+
+### When to Choose preact-headquarters
+
+1. You're building a Preact application.
+2. You want a more declarative API that fits well with Preact's component model.
+3. You need tight integration with Preact's state management and lifecycle.
+4. You want additional features like dynamic styles based on scroll state.
+
+### When to Choose headroom.js
+
+1. You need a framework-agnostic solution.
+2. You're working with vanilla JavaScript or a non-React-like framework.
+3. You need to support older browsers without transpilation.
+
+### Code Comparison
+
+#### preact-headquarters
+
+```jsx
+import { h } from 'preact';
+import HeadQuarters from 'preact-headquarters';
+
+function App() {
+  return (
+    <HeadQuarters
+      pinStart={100}
+      upTolerance={5}
+      downTolerance={10}
+      onPin={() => console.log('Pinned')}
+      onUnpin={() => console.log('Unpinned')}
+    >
+      <header>
+        <h1>My Website</h1>
+      </header>
+    </HeadQuarters>
+  );
+}
+```
+
+#### headroom.js
+
+```html
+<header id="header"></header>
+
+<script src="https://unpkg.com/headroom.js"></script>
+<script>
+var myElement = document.querySelector("#header");
+var headroom  = new Headroom(myElement, {
+  offset : 100,
+  tolerance : {
+    up : 5,
+    down : 10
+  },
+  onPin : function() {
+    console.log('Pinned');
+  },
+  onUnpin : function() {
+    console.log('Unpinned');
+  }
+});
+headroom.init();
+</script>
+```
+
+In conclusion, while both libraries provide similar core functionality, preact-headquarters offers a more integrated and streamlined experience for Preact applications, with some additional features and a more declarative API.
+
+## FAQ
+
+### Q: How do I change the animation speed of the header?
+
+A: You can adjust the animation speed by setting the `transitionDuration` prop. This value is in milliseconds, so `transitionDuration={500}` would result in a half-second animation.
+
+### Q: Can I use preact-headquarters with a sidebar instead of a top header?
+
+A: Yes, you can adapt preact-headquarters for a sidebar. See the "Sidebar Implementation" example in Part 1 of the README for a basic implementation. You'll need to adjust the styles to translate on the X-axis instead of the Y-axis.
+
+### Q: How can I make the header always visible on larger screens?
+
+A: You can use the `disable` prop in combination with a media query or JavaScript-based check. See the "Disabling on Large Screens" example in Part 1 of the README for an implementation.
+
+### Q: The header flickers on iOS devices. How can I fix this?
+
+A: This is a common issue with fixed positioning on iOS. You can try adding `transform: translateZ(0)` to your header styles to force hardware acceleration:
+
+```jsx
+<HeadQuarters wrapperStyle={{ transform: 'translateZ(0)' }}>
+  <header>{/* Header content */}</header>
+</HeadQuarters>
+```
+
+### Q: How do I make the header hide immediately when scrolling down?
+
+A: Set the `downTolerance` prop to 0:
+
+```jsx
+<HeadQuarters downTolerance={0}>
+  <header>{/* Header content */}</header>
+</HeadQuarters>
+```
+
+### Q: Can I change the header's appearance based on its state?
+
+A: Yes, you can use the `dynamicStyles` prop to apply different styles based on the header's state. See the "Dynamic Styles" example in Part 1 of the README for an implementation.
+
+### Q: How do I handle content that changes the header's height?
+
+A: Use the `calcHeightOnResize` prop to recalculate the header's height when the window resizes:
+
+```jsx
+<HeadQuarters calcHeightOnResize={true}>
+  <header>{/* Header content that might change height */}</header>
+</HeadQuarters>
+```
+
+### Q: Can I use preact-headquarters with other frameworks or vanilla JavaScript?
+
+A: preact-headquarters is designed specifically for Preact. While it's not directly compatible with other frameworks, you could potentially adapt the core logic for use with vanilla JavaScript or other frameworks.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+Please ensure your code adheres to the existing style and that you add or update tests as necessary.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+

@@ -406,11 +406,11 @@ A: You can adjust the animation speed by setting the `transitionDuration` prop. 
 
 ### Q: Can I use preact-headquarters with a sidebar instead of a top header?
 
-A: Yes, you can adapt preact-headquarters for a sidebar. See the "Sidebar Implementation" example in Part 1 of the README for a basic implementation. You'll need to adjust the styles to translate on the X-axis instead of the Y-axis.
+A: Yes, you can adapt preact-headquarters for a sidebar. See the "Sidebar Implementation" example for a basic implementation. You'll need to adjust the styles to translate on the X-axis instead of the Y-axis.
 
 ### Q: How can I make the header always visible on larger screens?
 
-A: You can use the `disable` prop in combination with a media query or JavaScript-based check. See the "Disabling on Large Screens" example in Part 1 of the README for an implementation.
+A: You can use the `disable` prop in combination with a media query or JavaScript-based check. See the "Disabling on Large Screens" example for an implementation.
 
 ### Q: The header flickers on iOS devices. How can I fix this?
 
